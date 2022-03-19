@@ -21,9 +21,56 @@ import { IonHeader, IonPage, IonTitle, IonRow, IonToolbar, IonCard, IonCardHeade
 import { pin, wifi, wine, warning, walk } from 'ionicons/icons';
 import './ListContainer.css';
 import { IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
+import axios from 'axios';
+
 export const ListContainer: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
+  const [listItems, setListItems] = useState<any>([]);
+  const [currentSelection, setCurrentSelection] = useState<any>({
+    name: "bulbasaur",
+    url: "https://pokeapi.co/api/v2/pokemon/1/"
+  });
+  const [modalInfo, setModalInfo] = useState<any>([]);
 
+  const sendRequest = () => {
+    return axios
+      .get('https://pokeapi.co/api/v2/pokemon', {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then((response) => {
+        return response.data;
+      })
+  };
+
+  const sendRequestPokemons = (url: any) => {
+    return axios
+      .get(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then((response) => {
+        return response.data;
+      })
+  };
+
+  // React.useEffect(() => {
+  //   sendRequest().then(async (data) => await data?.results.map(async (element: any) => await sendRequestPokemons(element?.url).then((data: any) => setListItems([...listItems,data]))));
+  // }, []);
+  React.useEffect(() => {
+    sendRequest().then((data) => {
+      setListItems(data.results)
+    });
+  }, []);
+  React.useEffect(() => {
+    sendRequestPokemons(currentSelection.url).then((data) => {
+      console.log('data  currentSelection',data);
+      setModalInfo(data);
+    });
+  }, [currentSelection]);
+  console.log('currentSelection  ', currentSelection);
   return (
     <IonContent>
       <IonModal isOpen={showModal}>
@@ -32,7 +79,7 @@ export const ListContainer: React.FC = () => {
           <IonHeader>
             <IonToolbar className='toolBar'>
               <IonRow>
-                <IonTitle>CardExamples</IonTitle>
+                <IonTitle>{modalInfo?.name}</IonTitle>
                 <IonButton onClick={() => setShowModal(false)}>
                   Close Modal
                 </IonButton>
@@ -97,14 +144,27 @@ export const ListContainer: React.FC = () => {
         </IonButton> */}
       </IonModal>
       {/* <IonButton color="primary" size="large" expand="full" shape="round" className="cardButton" onClick={() => setShowModal(true)}> */}
-      <IonItemSliding>
+      {listItems.map((element: any, index: number) => {
+        // console.log('index', index);
+        return (
+          <IonItemSliding key={index}>
+            <IonItem onClick={() => { setShowModal(true); setCurrentSelection(element); }}>
+              <IonLabel>{element.name}</IonLabel>
+            </IonItem>
+            <IonItemOptions side="end">
+              <IonItemOption onClick={() => setShowModal(true)}>Unread</IonItemOption>
+            </IonItemOptions>
+          </IonItemSliding>
+        );
+      })}
+      {/* <IonItemSliding>
         <IonItem onClick={() => setShowModal(true)}>
           <IonLabel>Item</IonLabel>
         </IonItem>
         <IonItemOptions side="end">
           <IonItemOption onClick={() => setShowModal(true)}>Unread</IonItemOption>
         </IonItemOptions>
-      </IonItemSliding>
+      </IonItemSliding> */}
       {/* </IonButton> */}
     </IonContent>
   );
