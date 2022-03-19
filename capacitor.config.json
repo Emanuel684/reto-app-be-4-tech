@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "reto_app_be4tech",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

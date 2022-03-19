@@ -1,0 +1,8 @@
+{
+  "name": "reto_app_be4tech",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react",
+  "id": "2eb8a9ca"
+}
