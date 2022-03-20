@@ -27,7 +27,6 @@ export const ListContainer: React.FC = () => {
         },
       })
       .then((response) => {
-        console.log('response   ', response);
         setPaginationUrlNext(response.data.next);
         setPaginationUrlPrevious(response.data.previous);
         return response.data;
@@ -92,11 +91,11 @@ export const ListContainer: React.FC = () => {
                 </IonCardContent>
                 <IonCardContent>
                   <IonCardTitle>Abilidades</IonCardTitle>
-                  {modalInfo?.abilities?.map((element: any) => {
+                  {modalInfo?.abilities?.map((element: any, index: number) => {
                     return (
-                      <>
+                      <IonLabel key={index}>
                         {`    ${element?.ability?.name}`}
-                      </>
+                      </IonLabel>
                     )
                   })}
                 </IonCardContent>
@@ -105,9 +104,9 @@ export const ListContainer: React.FC = () => {
 
             <IonCard>
               <IonCardTitle>Tipos</IonCardTitle>
-              {modalInfo?.types?.map((element: any) => {
+              {modalInfo?.types?.map((element: any, index: number) => {
                 return (
-                  <IonItem href="#" className="ion-activated">
+                  <IonItem key={index} href="#" className="ion-activated">
                     <IonIcon icon={ribbonOutline} slot="start" />
                     <IonLabel>{element?.type?.name}</IonLabel>
                   </IonItem>
@@ -118,9 +117,9 @@ export const ListContainer: React.FC = () => {
 
             <IonCard>
               <IonCardTitle>Estadisticas</IonCardTitle>
-              {modalInfo?.stats?.map((element: any) => {
+              {modalInfo?.stats?.map((element: any, index: number) => {
                 return (
-                  <IonItem href="#" className="ion-activated">
+                  <IonItem key={index} href="#" className="ion-activated">
                     <IonIcon icon={waterOutline} slot="start" />
                     <IonLabel>{element?.stat?.name}</IonLabel>
                     <IonLabel>{element?.base_stat}</IonLabel>
@@ -150,7 +149,6 @@ export const ListContainer: React.FC = () => {
       <IonToolbar className='toolBar'>
         <IonRow>
           <IonButton color="secondary" onClick={() => {
-            console.log('previous')
             setNumPage(numPage - 1);
             setPaginationUrlInitial(paginationUrlPrevious);
           }}>
@@ -158,7 +156,6 @@ export const ListContainer: React.FC = () => {
           </IonButton>
           <IonLabel>{numPage}</IonLabel>
           <IonButton color="secondary" onClick={() => {
-            console.log('next')
             setNumPage(numPage + 1);
             setPaginationUrlInitial(paginationUrlNext);
           }}>
