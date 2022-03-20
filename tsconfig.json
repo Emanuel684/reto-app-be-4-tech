@@ -1,26 +1,22 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+  “compilerOptions”: {
+  “allowSyntheticDefaultImports”: true,
+  “declaration”: true,
+  “emitDecoratorMetadata”: true,
+  “experimentalDecorators”: true,
+  “lib”: [
+  “dom”,
+  “es2015”
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+  “module”: “es2015”,
+  “moduleResolution”: “node”,
+  “target”: “es5”
   },
-  "include": [
-    "src"
-  ]
+  “exclude”: [
+  “node_modules”
+  ],
+  “compileOnSave”: false,
+  “atom”: {
+  “rewriteTsconfig”: false
+  }
 }
