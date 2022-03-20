@@ -17,8 +17,8 @@
 
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';
-import { IonHeader, IonPage, IonTitle, IonRow, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel } from '@ionic/react';
-import { pin, wifi, wine, warning, walk } from 'ionicons/icons';
+import { IonHeader, IonPage, IonTitle, IonRow,IonImg, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel } from '@ionic/react';
+import { wifi } from 'ionicons/icons';
 import './ListContainer.css';
 import { IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
 import axios from 'axios';
@@ -55,10 +55,6 @@ export const ListContainer: React.FC = () => {
         return response.data;
       })
   };
-
-  // React.useEffect(() => {
-  //   sendRequest().then(async (data) => await data?.results.map(async (element: any) => await sendRequestPokemons(element?.url).then((data: any) => setListItems([...listItems,data]))));
-  // }, []);
   React.useEffect(() => {
     sendRequest().then((data) => {
       setListItems(data.results)
@@ -70,11 +66,11 @@ export const ListContainer: React.FC = () => {
       setModalInfo(data);
     });
   }, [currentSelection]);
-  console.log('currentSelection  ', currentSelection);
   return (
     <IonContent>
-      <IonModal isOpen={showModal}>
-        {/* <p>This is the modal content.</p> */}
+      <IonModal onDidDismiss={() => {
+        setShowModal(false)
+      }} isOpen={showModal}>
         <IonPage>
           <IonHeader>
             <IonToolbar className='toolBar'>
@@ -89,63 +85,44 @@ export const ListContainer: React.FC = () => {
           <IonContent>
             <IonCard>
               <IonCardHeader>
-                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                <IonCardTitle>Card Title</IonCardTitle>
+                <IonImg src={modalInfo?.sprites?.front_default} />
+                <IonCardTitle>{modalInfo?.name}</IonCardTitle>
               </IonCardHeader>
-
               <IonCardContent>
-                Keep close to Nature's heart... and break clear away, once in awhile,
-                and climb a mountain or spend a week in the woods. Wash your spirit clean.
+              <IonCardTitle>Tamaño</IonCardTitle>
+                {modalInfo?.height}
+              </IonCardContent>
+              <IonCardContent>
+              <IonCardTitle>Abilidades</IonCardTitle>
+                {modalInfo?.abilities?.map((element: any) => {
+                  return (
+                    <>
+                    { element?.ability?.name}
+                    </>
+                  )
+                })}
               </IonCardContent>
             </IonCard>
 
             <IonCard>
-              <IonItem>
-                <IonIcon icon={pin} slot="start" />
-                <IonLabel>ion-item in a card, icon left, button right</IonLabel>
-                <IonButton fill="outline" slot="end">View</IonButton>
-              </IonItem>
-
-              <IonCardContent>
-                This is content, without any paragraph or header tags,
-                within an ion-cardContent element.
-              </IonCardContent>
-            </IonCard>
-
-            <IonCard>
-              <IonItem href="#" className="ion-activated">
+            <IonCardTitle>Tipos</IonCardTitle>
+            {modalInfo?.types?.map((element: any) => {
+              console.log('element   ', element);
+                  return (
+                    <IonItem href="#" className="ion-activated">
                 <IonIcon icon={wifi} slot="start" />
-                <IonLabel>Card Link Item 1 activated</IonLabel>
+                <IonLabel>{element?.type?.name}</IonLabel>
               </IonItem>
+                  )
+                })}
 
-              <IonItem href="#">
-                <IonIcon icon={wine} slot="start" />
-                <IonLabel>Card Link Item 2</IonLabel>
-              </IonItem>
-
-              <IonItem className="ion-activated">
-                <IonIcon icon={warning} slot="start" />
-                <IonLabel>Card Button Item 1 activated</IonLabel>
-              </IonItem>
-
-              <IonItem>
-                <IonIcon icon={walk} slot="start" />
-                <IonLabel>Card Button Item 2</IonLabel>
-              </IonItem>
             </IonCard>
           </IonContent>
 
 
         </IonPage>
-        {/* <p>This is the modal content.</p> */}
-
-        {/* <IonButton onClick={() => setShowModal(false)}>
-            Close Modal
-        </IonButton> */}
       </IonModal>
-      {/* <IonButton color="primary" size="large" expand="full" shape="round" className="cardButton" onClick={() => setShowModal(true)}> */}
       {listItems.map((element: any, index: number) => {
-        // console.log('index', index);
         return (
           <IonItemSliding key={index}>
             <IonItem onClick={() => { setShowModal(true); setCurrentSelection(element); }}>
@@ -157,15 +134,6 @@ export const ListContainer: React.FC = () => {
           </IonItemSliding>
         );
       })}
-      {/* <IonItemSliding>
-        <IonItem onClick={() => setShowModal(true)}>
-          <IonLabel>Item</IonLabel>
-        </IonItem>
-        <IonItemOptions side="end">
-          <IonItemOption onClick={() => setShowModal(true)}>Unread</IonItemOption>
-        </IonItemOptions>
-      </IonItemSliding> */}
-      {/* </IonButton> */}
     </IonContent>
   );
 };

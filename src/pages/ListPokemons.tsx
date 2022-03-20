@@ -22,10 +22,8 @@ const ListPokemons: React.FC = () => {
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">{name}</IonTitle>
-            {/* <IonTitle size="large">Emanuel Acevedo</IonTitle> */}
           </IonToolbar>
         </IonHeader>
-        {/* <ExploreContainer name={name} /> */}
         <ExploreContainer />
       </IonContent>
     </IonPage>

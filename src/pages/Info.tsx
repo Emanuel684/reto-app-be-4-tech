@@ -1,6 +1,6 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useParams } from 'react-router';
-import ExploreContainer from '../components/ListContainer';
+import InfoContainer from '../components/InfoContainer';
 import './Info.css';
 
 const Info: React.FC = () => {
@@ -22,11 +22,9 @@ const Info: React.FC = () => {
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">{name}</IonTitle>
-            {/* <IonTitle size="large">Emanuel Acevedo</IonTitle> */}
           </IonToolbar>
         </IonHeader>
-        {/* <ExploreContainer name={name} /> */}
-        {/* <ExploreContainer /> */}
+        <InfoContainer />
       </IonContent>
     </IonPage>
   );
