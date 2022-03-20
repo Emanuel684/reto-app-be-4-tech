@@ -80,11 +80,15 @@ export const ListContainer: React.FC = () => {
                 {modalInfo?.height}
               </IonCardContent>
               <IonCardContent>
+              <IonCardTitle>Experiencia base</IonCardTitle>
+                {modalInfo?.base_experience}
+              </IonCardContent>
+              <IonCardContent>
               <IonCardTitle>Abilidades</IonCardTitle>
                 {modalInfo?.abilities?.map((element: any) => {
                   return (
                     <>
-                    { element?.ability?.name}
+                    {`    ${element?.ability?.name}`}
                     </>
                   )
                 })}
