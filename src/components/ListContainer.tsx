@@ -19,18 +19,16 @@ export const ListContainer: React.FC = () => {
   });
   const [modalInfo, setModalInfo] = useState<any>([]);
 
-  const sendRequest = () => {
-    return axios
+  const sendRequest = async () => {
+    const response = await axios
       .get(paginationUrlInitial, {
         headers: {
           'Content-Type': 'application/json'
         },
-      })
-      .then((response) => {
-        setPaginationUrlNext(response.data.next);
-        setPaginationUrlPrevious(response.data.previous);
-        return response.data;
-      })
+      });
+    setPaginationUrlNext(response.data.next);
+    setPaginationUrlPrevious(response.data.previous);
+    return response.data;
   };
 
   const sendRequestPokemons = (url: any) => {
@@ -48,6 +46,7 @@ export const ListContainer: React.FC = () => {
     sendRequest().then((data) => {
       setListItems(data.results)
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paginationUrlInitial]);
   React.useEffect(() => {
     sendRequestPokemons(currentSelection.url).then((data) => {
