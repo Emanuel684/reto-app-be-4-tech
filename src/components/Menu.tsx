@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp } from 'ionicons/icons';
+import { logoSnapchat, peopleCircleOutline } from 'ionicons/icons';
 import './Menu.css';
 
 interface AppPage {
@@ -25,14 +25,14 @@ const appPages: AppPage[] = [
   {
     title: 'Pokemons',
     url: '/Home',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
+    iosIcon: logoSnapchat,
+    mdIcon: logoSnapchat
   },
   {
     title: 'Informacion',
     url: '/Info',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
+    iosIcon: peopleCircleOutline,
+    mdIcon: peopleCircleOutline
   },
 ];
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';
-import { IonHeader, IonPage, IonTitle, IonRow,IonImg, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel } from '@ionic/react';
+import { IonHeader, IonPage, IonTitle, IonRow,IonImg, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonThumbnail } from '@ionic/react';
 import { wifi } from 'ionicons/icons';
 import './ListContainer.css';
 import { IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
@@ -58,9 +58,9 @@ export const ListContainer: React.FC = () => {
           <IonHeader>
             <IonToolbar className='toolBar'>
               <IonRow>
-                <IonTitle>{modalInfo?.name}</IonTitle>
-                <IonButton onClick={() => setShowModal(false)}>
-                  Close Modal
+                <IonTitle>{modalInfo?.name?.charAt(0)?.toUpperCase() + modalInfo?.name?.slice(1)}</IonTitle>
+                <IonButton color="danger" onClick={() => setShowModal(false)}>
+                  X
                 </IonButton>
               </IonRow>
             </IonToolbar>
@@ -68,8 +68,12 @@ export const ListContainer: React.FC = () => {
           <IonContent>
             <IonCard>
               <IonCardHeader>
-                <IonImg src={modalInfo?.sprites?.front_default} />
-                <IonCardTitle>{modalInfo?.name}</IonCardTitle>
+                <div className='imagePokemon'>
+              <IonThumbnail>
+                <IonImg className='imagePokemon'  src={modalInfo?.sprites?.front_default} alt="" />
+              </IonThumbnail>
+              </div>
+                <IonCardTitle>{modalInfo?.name?.charAt(0)?.toUpperCase() + modalInfo?.name?.slice(1)}</IonCardTitle>
               </IonCardHeader>
               <IonCardContent>
               <IonCardTitle>Tamaño</IonCardTitle>
@@ -100,6 +104,22 @@ export const ListContainer: React.FC = () => {
                 })}
 
             </IonCard>
+
+            <IonCard>
+            <IonCardTitle>Estadisticas</IonCardTitle>
+            {modalInfo?.stats?.map((element: any) => {
+              console.log('element   ', element);
+                  return (
+                    <IonItem href="#" className="ion-activated">
+                <IonIcon icon={wifi} slot="start" />
+                <IonLabel>{element?.stat?.name}</IonLabel>
+                <IonLabel>{element?.base_stat}</IonLabel>
+              </IonItem>
+                  )
+                })}
+
+            </IonCard>
+
           </IonContent>
 
 
@@ -109,7 +129,7 @@ export const ListContainer: React.FC = () => {
         return (
           <IonItemSliding key={index}>
             <IonItem onClick={() => { setShowModal(true); setCurrentSelection(element); }}>
-              <IonLabel>{element.name}</IonLabel>
+              <IonLabel>{element?.name?.charAt(0)?.toUpperCase() + element?.name?.slice(1)}</IonLabel>
             </IonItem>
             <IonItemOptions side="end">
               <IonItemOption onClick={() => setShowModal(true)}>Unread</IonItemOption>

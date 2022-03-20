@@ -1,12 +1,14 @@
-.card {
-    margin: 0 auto;
-}
 
 .avatar {
-    width: 160px;
-    height: 160px;
+    width: 360px;
+    height: 460px;
     position: relative;
     margin: 0 auto;
+    border-radius: 10%;
+}
+
+.header {
+    border-radius: 40px;
 }
 
 img {
@@ -19,25 +21,18 @@ img {
 }
 
 .card-body {
-    background-color: #ffffff;
     padding: 30px;
     height: calc(100vh – (200px + 56px));
     overflow: hidden;
 }
 
 .user-meta {
-    padding-top: 40px;
+    padding-top: 0px;
 }
 
 .playername {
-    font-size: 24px;
-    font-weight: 600;
-    color: #303940;
-}
-
-.country {
-    font-size: 90%;
-    color: #949ea6;
+    font-size: 30px;
     text-transform: uppercase;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
