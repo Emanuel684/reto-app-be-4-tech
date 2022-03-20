@@ -1,23 +1,6 @@
-// import './ExploreContainer.css';
-
-// interface ContainerProps {
-//   name: string;
-// }
-
-// const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
-//   return (
-//     <div className="container">
-//       <strong>{name}</strong>
-//       <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-//     </div>
-//   );
-// };
-
-// export default ExploreContainer;
-
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';
-import { IonHeader, IonPage, IonTitle, IonRow,IonImg, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel } from '@ionic/react';
+import { IonHeader, IonPage, IonTitle, IonRow,IonImg, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel } from '@ionic/react';
 import { wifi } from 'ionicons/icons';
 import './ListContainer.css';
 import { IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
