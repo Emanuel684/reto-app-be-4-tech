@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';
-import { IonHeader, IonPage, IonTitle, IonRow,IonImg, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonThumbnail } from '@ionic/react';
-import { wifi } from 'ionicons/icons';
+import { IonHeader, IonPage, IonTitle, IonRow, IonImg, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonThumbnail } from '@ionic/react';
+import { ribbonOutline, waterOutline } from 'ionicons/icons';
 import './ListContainer.css';
 import { IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
 import axios from 'axios';
 
 export const ListContainer: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
+  const [paginationUrlNext, setPaginationUrlNext] = useState('');
+  const [paginationUrlPrevious, setPaginationUrlPrevious] = useState('');
+  const [paginationUrlInitial, setPaginationUrlInitial] = useState('https://pokeapi.co/api/v2/pokemon');
+  const [numPage, setNumPage] = useState(1);
   const [listItems, setListItems] = useState<any>([]);
   const [currentSelection, setCurrentSelection] = useState<any>({
     name: "bulbasaur",
@@ -17,12 +21,15 @@ export const ListContainer: React.FC = () => {
 
   const sendRequest = () => {
     return axios
-      .get('https://pokeapi.co/api/v2/pokemon', {
+      .get(paginationUrlInitial, {
         headers: {
           'Content-Type': 'application/json'
         },
       })
       .then((response) => {
+        console.log('response   ', response);
+        setPaginationUrlNext(response.data.next);
+        setPaginationUrlPrevious(response.data.previous);
         return response.data;
       })
   };
@@ -42,10 +49,9 @@ export const ListContainer: React.FC = () => {
     sendRequest().then((data) => {
       setListItems(data.results)
     });
-  }, []);
+  }, [paginationUrlInitial]);
   React.useEffect(() => {
     sendRequestPokemons(currentSelection.url).then((data) => {
-      console.log('data  currentSelection',data);
       setModalInfo(data);
     });
   }, [currentSelection]);
@@ -69,58 +75,58 @@ export const ListContainer: React.FC = () => {
             <IonCard>
               <IonCardHeader>
                 <div className='imagePokemon'>
-              <IonThumbnail>
-                <IonImg className='imagePokemon'  src={modalInfo?.sprites?.front_default} alt="" />
-              </IonThumbnail>
-              </div>
+                  <IonThumbnail>
+                    <IonImg className='imagePokemon' src={modalInfo?.sprites?.front_default} alt="" />
+                  </IonThumbnail>
+                </div>
                 <IonCardTitle>{modalInfo?.name?.charAt(0)?.toUpperCase() + modalInfo?.name?.slice(1)}</IonCardTitle>
               </IonCardHeader>
-              <IonCardContent>
-              <IonCardTitle>Tamaño</IonCardTitle>
-                {modalInfo?.height}
-              </IonCardContent>
-              <IonCardContent>
-              <IonCardTitle>Experiencia base</IonCardTitle>
-                {modalInfo?.base_experience}
-              </IonCardContent>
-              <IonCardContent>
-              <IonCardTitle>Abilidades</IonCardTitle>
-                {modalInfo?.abilities?.map((element: any) => {
-                  return (
-                    <>
-                    {`    ${element?.ability?.name}`}
-                    </>
-                  )
-                })}
-              </IonCardContent>
+              <IonRow>
+                <IonCardContent>
+                  <IonCardTitle>Tamaño</IonCardTitle>
+                  {modalInfo?.height}
+                </IonCardContent>
+                <IonCardContent>
+                  <IonCardTitle>Experiencia base</IonCardTitle>
+                  {modalInfo?.base_experience}
+                </IonCardContent>
+                <IonCardContent>
+                  <IonCardTitle>Abilidades</IonCardTitle>
+                  {modalInfo?.abilities?.map((element: any) => {
+                    return (
+                      <>
+                        {`    ${element?.ability?.name}`}
+                      </>
+                    )
+                  })}
+                </IonCardContent>
+              </IonRow>
             </IonCard>
 
             <IonCard>
-            <IonCardTitle>Tipos</IonCardTitle>
-            {modalInfo?.types?.map((element: any) => {
-              console.log('element   ', element);
-                  return (
-                    <IonItem href="#" className="ion-activated">
-                <IonIcon icon={wifi} slot="start" />
-                <IonLabel>{element?.type?.name}</IonLabel>
-              </IonItem>
-                  )
-                })}
+              <IonCardTitle>Tipos</IonCardTitle>
+              {modalInfo?.types?.map((element: any) => {
+                return (
+                  <IonItem href="#" className="ion-activated">
+                    <IonIcon icon={ribbonOutline} slot="start" />
+                    <IonLabel>{element?.type?.name}</IonLabel>
+                  </IonItem>
+                )
+              })}
 
             </IonCard>
 
             <IonCard>
-            <IonCardTitle>Estadisticas</IonCardTitle>
-            {modalInfo?.stats?.map((element: any) => {
-              console.log('element   ', element);
-                  return (
-                    <IonItem href="#" className="ion-activated">
-                <IonIcon icon={wifi} slot="start" />
-                <IonLabel>{element?.stat?.name}</IonLabel>
-                <IonLabel>{element?.base_stat}</IonLabel>
-              </IonItem>
-                  )
-                })}
+              <IonCardTitle>Estadisticas</IonCardTitle>
+              {modalInfo?.stats?.map((element: any) => {
+                return (
+                  <IonItem href="#" className="ion-activated">
+                    <IonIcon icon={waterOutline} slot="start" />
+                    <IonLabel>{element?.stat?.name}</IonLabel>
+                    <IonLabel>{element?.base_stat}</IonLabel>
+                  </IonItem>
+                )
+              })}
 
             </IonCard>
 
@@ -141,6 +147,25 @@ export const ListContainer: React.FC = () => {
           </IonItemSliding>
         );
       })}
+      <IonToolbar className='toolBar'>
+        <IonRow>
+          <IonButton color="secondary" onClick={() => {
+            console.log('previous')
+            setNumPage(numPage - 1);
+            setPaginationUrlInitial(paginationUrlPrevious);
+          }}>
+            Anterior
+          </IonButton>
+          <IonLabel>{numPage}</IonLabel>
+          <IonButton color="secondary" onClick={() => {
+            console.log('next')
+            setNumPage(numPage + 1);
+            setPaginationUrlInitial(paginationUrlNext);
+          }}>
+            Siguiente
+          </IonButton>
+        </IonRow>
+      </IonToolbar>
     </IonContent>
   );
 };
