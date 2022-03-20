@@ -11,6 +11,18 @@
   border-radius: 100%;
   background-color: white;
   align-self: center;
+  justify-self: center;
   width: 360px;
   height: 360px;
+}
+
+.ion-align-self-center {
+  align-self: center;
+  justify-content: center;
+}
+
+.ion-label {
+  margin-left: 20px;
+  margin-right: 20px;
+  align-self: center;
 }

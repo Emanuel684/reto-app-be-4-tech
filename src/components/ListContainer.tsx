@@ -72,7 +72,7 @@ export const ListContainer: React.FC = () => {
           </IonHeader>
           <IonContent>
             <IonCard>
-              <IonCardHeader>
+              <IonCardHeader className="ion-align-self-center">
                 <div className='imagePokemon'>
                   <IonThumbnail>
                     <IonImg className='imagePokemon' src={modalInfo?.sprites?.front_default} alt="" />
@@ -90,7 +90,7 @@ export const ListContainer: React.FC = () => {
                   {modalInfo?.base_experience}
                 </IonCardContent>
                 <IonCardContent>
-                  <IonCardTitle>Abilidades</IonCardTitle>
+                  <IonCardTitle>Habilidades</IonCardTitle>
                   {modalInfo?.abilities?.map((element: any, index: number) => {
                     return (
                       <IonLabel key={index}>
@@ -116,7 +116,7 @@ export const ListContainer: React.FC = () => {
             </IonCard>
 
             <IonCard>
-              <IonCardTitle>Estadisticas</IonCardTitle>
+              <IonCardTitle>Estadísticas</IonCardTitle>
               {modalInfo?.stats?.map((element: any, index: number) => {
                 return (
                   <IonItem key={index} href="#" className="ion-activated">
@@ -147,15 +147,15 @@ export const ListContainer: React.FC = () => {
         );
       })}
       <IonToolbar className='toolBar'>
-        <IonRow>
-          <IonButton color="secondary" onClick={() => {
+        <IonRow className="ion-align-self-center">
+          <IonButton disabled={numPage === 1 ? true : false} color="secondary" onClick={() => {
             setNumPage(numPage - 1);
             setPaginationUrlInitial(paginationUrlPrevious);
           }}>
             Anterior
           </IonButton>
-          <IonLabel>{numPage}</IonLabel>
-          <IonButton color="secondary" onClick={() => {
+          <IonLabel className="ion-label">{numPage}</IonLabel>
+          <IonButton disabled={ paginationUrlNext == null ? true : false} color="secondary" onClick={() => {
             setNumPage(numPage + 1);
             setPaginationUrlInitial(paginationUrlNext);
           }}>
